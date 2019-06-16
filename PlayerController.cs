@@ -6,8 +6,10 @@ public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid2D;
     Animator animator;  //<- 追加
+    //FireBallプレハブ
+    //public GamaObiect PlayerFireball;
 
-    float walkForce = 450.0f; //移動
+    float walkForce = 400.0f; //移動
     float maxWalkSpeed = 3.0f;//最高速度
     float flap = 1000f;       //ジャンプ高さ
     bool isJump = false;        //ジャンプできるか
@@ -16,11 +18,19 @@ public class PlayerController : MonoBehaviour
     private bool isAttack = false;  //攻撃
 
     // Use this for initialization
-    void Start()
+    /*void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
-        this.animator = GetComponent<Animator>(); //<- 追加
+        this.animator = GetComponent<Animator>();
+    }*/
+    IEnumerator Start()
+    {
+        while (true)
+        {
+            Instantiate(fireball_1_1, transform.position, transform.rotation);
+        }
     }
+
 
     // Update is called once per frame
     void Update()
@@ -30,6 +40,8 @@ public class PlayerController : MonoBehaviour
         MoveComand();
         //ジャンプ
         JumpComand();
+        //攻撃
+        AttackCommand();
     }
 
     //****************ジャンプ***********************
@@ -38,24 +50,21 @@ public class PlayerController : MonoBehaviour
         if (jumpCounter < MAX_JUMP_COUNT && Input.GetKeyDown("space"))
         {
             isJump = true;
-            this.animator.SetTrigger("JumpTrigger");// <- 追加。。。。
+            this.animator.SetTrigger("JumpTrigger");
         }
         else
         {
             this.animator.SetTrigger("WalkTigger");　
-        }                                           // <-ここまで
+        }                                           
         if (isJump)
         {
-            //rigid2D.velocity = Vector2.zero;//(一回目のジャンプと同じ高さで二回目のジャンプ)
-            //this.animator.SetTrigger("JumpTrigger");
             rigid2D.AddForce(Vector2.up * flap);
             jumpCounter++;
             isJump = false;
-            // this.animator.SetTrigger("WalkTrigger");
         }
         else
         {
-            this.animator.SetTrigger("WalkTrigger");// <-else 追加
+            this.animator.SetTrigger("WalkTrigger");
         }
     }
     //ジャンプ回数のリセット
@@ -96,4 +105,15 @@ public class PlayerController : MonoBehaviour
 
 
     //**************攻撃*****************
+    void AttackCommand()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            print("左ボタンが押されている");
+        }
+        if (Input.GetMouseButton(1))
+        {
+            print("右のボタンが押されている");
+        }
+    }
 }
