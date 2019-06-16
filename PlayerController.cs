@@ -18,20 +18,11 @@ public class PlayerController : MonoBehaviour
     private bool isAttack = false;  //攻撃
 
     // Use this for initialization
-    /*void Start()
+    void Start()
     {
         this.rigid2D = GetComponent<Rigidbody2D>();
         this.animator = GetComponent<Animator>();
-    }*/
-    IEnumerator Start()
-    {
-        while (true)
-        {
-            Instantiate(fireball_1_1, transform.position, transform.rotation);
-        }
     }
-
-
     // Update is called once per frame
     void Update()
     {
